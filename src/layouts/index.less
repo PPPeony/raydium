@@ -1,0 +1,85 @@
+.navs {
+  ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+  }
+  li {
+    margin-right: 1em;
+  }
+}
+@import '~antd/dist/antd.css';
+body {
+  height: 100%!important;
+  font-family: Space Grotesk,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  font-feature-settings: "ss04","tnum" 1;
+  color: var(--primary);
+  background-color: #131a35;
+}
+
+.outside-layout {
+  height: 100%;
+}
+
+.site-layout-background-sider {
+  display: none;
+}
+
+@media screen and (min-width: 1000px){
+  .site-layout-background-sider {
+    display: block;
+  }
+  
+}
+
+
+.header {
+  height: (76em / 14);
+  padding: (16em / 14) (48em / 14);
+  background-color: #131a35;
+  .header-row {
+    height: 100%;
+    color: #39d0d8;
+    .header-row-col {
+      position: relative;
+      height: 100%;
+      .header-row-col-button {
+        position: absolute;
+        width: 162px;
+        height: 100%;
+      }
+    }
+  }
+}
+
+
+#components-layout-demo-top-side-2 .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.ant-row-rtl #components-layout-demo-top-side-2 .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+
+.site-layout-background {
+  background: #131a35;
+}
+
+.site-layout-background .scroll-menu-first,
+.site-layout-background .scroll-menu-second {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background: #131a35;
+  color: #39d0d8;
+
+}
+
+.site-layout-background-content {
+  background-color: #0c0927;
+  border-top-left-radius: 1.25rem;
+}

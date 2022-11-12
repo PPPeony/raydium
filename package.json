@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "author": "yangli <172209668@qq.com>",
+  "scripts": {
+    "dev": "umi dev",
+    "build": "umi build",
+    "postinstall": "umi setup",
+    "setup": "umi setup",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "antd": "^4.24.1",
+    "umi": "^4.0.29"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@umijs/lint": "^4.0.30",
+    "eslint": "^8.27.0",
+    "stylelint": "^14.14.1",
+    "typescript": "^4.1.2"
+  }
+}
