@@ -1,9 +1,8 @@
 import { Outlet } from 'umi';
-import { Layout, Row, Col, Button, Menu, Divider } from 'antd';
+import { Row, Col, Button, } from 'antd';
 import type { SizeType } from 'antd/es/config-provider/SizeContext';
 import React, { useState } from 'react';
 import SwapBox from '@/components/SwapBox';
-import yayJpg from '../assets/yay.jpg';
 export default function HomePage() {
 
   const [size, setSize] = useState<SizeType>('large');

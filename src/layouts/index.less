@@ -9,8 +9,11 @@
   }
 }
 @import '~antd/dist/antd.css';
+html {
+  font-size: 16px;
+}
 body {
-  height: 100%!important;
+  height: 100%;
   font-family: Space Grotesk,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
   font-feature-settings: "ss04","tnum" 1;
   color: var(--primary);
@@ -34,21 +37,11 @@ body {
 
 
 .header {
-  height: (76em / 14);
+  display: block!important;
   padding: (16em / 14) (48em / 14);
   background-color: #131a35;
   .header-row {
-    height: 100%;
     color: #39d0d8;
-    .header-row-col {
-      position: relative;
-      height: 100%;
-      .header-row-col-button {
-        position: absolute;
-        width: 162px;
-        height: 100%;
-      }
-    }
   }
 }
 
@@ -69,17 +62,39 @@ body {
 .site-layout-background {
   background: #131a35;
 }
-
-.site-layout-background .scroll-menu-first,
-.site-layout-background .scroll-menu-second {
-  overflow-y: scroll;
-  overflow-x: hidden;
+.site-layout-background-sider {
+  width: 224px;
+}
+.scroll-menu-first,
+.scroll-menu-second {
   background: #131a35;
   color: #39d0d8;
-
 }
 
 .site-layout-background-content {
   background-color: #0c0927;
   border-top-left-radius: 1.25rem;
+}
+
+.ant-menu.scroll-menu-first {
+  min-height: 120px;
+  height: 300px;
+  overflow-y: scroll;
+  padding: 1rem;
+  padding-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  .ant-menu-item {
+    display: flex;
+    height: 3rem;
+    padding: 10px 16px;
+    align-items: center;
+  
+  
+    margin-bottom: 0!important;
+    .sider-menuitem-icon {
+      margin-right: 0.75rem;
+    }
+  }
 }
