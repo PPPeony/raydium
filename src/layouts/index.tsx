@@ -3,7 +3,7 @@ import { Outlet } from 'umi'
 import React from 'react';
 
 import type { MenuProps } from 'antd';
-import { Layout, Row, Col, Button, Menu, Divider } from 'antd';
+import { Layout, Row, Col, Button, Menu } from 'antd';
 // import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 
 import './index.less'
@@ -12,6 +12,7 @@ import Icon from '@/components/Icon';
 import IconWithoutBack from '@/components/IconWithoutBack';
 
 import logo from '../assets/logo/logo-with-text.svg'
+import BoxWithBorderRadius from '@/components/BoxWithBorderRadius';
 
 
 
@@ -44,11 +45,12 @@ const items3: MenuProps['items'] = [
   {label: 'Raydium V1', svg: 'settings'},
   {label: 'Feedback', svg: 'settings'},].map(
   (item, index) => {
-    const key = String(index + 1);
+    const key: string = String(index + 1);
     return {
       key: `sub${key}`,
       icon: <IconWithoutBack src={item.svg}/>,
       label: item.label,
+
     };
   },
 );
@@ -74,7 +76,7 @@ const App: React.FC = () => (
       </Row>
       </div>
     </header>
-    <Layout>
+    <Layout className='main-layout'>
       <Row style={{backgroundColor: '#131a35'}}>
         <Col>
           <aside className="site-layout-background site-layout-background-sider">
@@ -92,7 +94,7 @@ const App: React.FC = () => (
               <Col span={24}>
                 <Row>
                   <Col span={24}>
-                    <Divider />
+                    <div className='sider-divider' />
                   </Col>
                   <Col span={24}>
                     <Menu
@@ -113,13 +115,12 @@ const App: React.FC = () => (
         </Col>
         <Col flex='auto' style={{borderTopLeftRadius: '1.25rem',backgroundColor: '#0c0927', overflow:'hidden'}}>
           <main>
+            <BoxWithBorderRadius></BoxWithBorderRadius>
             <Outlet/>
           </main>
         </Col>
       </Row>
     </Layout>
-
-
   </Layout>
 );
 

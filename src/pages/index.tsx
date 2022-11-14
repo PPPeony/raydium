@@ -1,33 +1,22 @@
-import { Outlet } from 'umi';
-import { Row, Col, Button, } from 'antd';
-import type { SizeType } from 'antd/es/config-provider/SizeContext';
-import React, { useState } from 'react';
-import SwapBox from '@/components/SwapBox';
+import React from 'react';
+import SwitchTabs from '@/components/SwitchTabs';
+import BluePurplePanel from '@/components/BluePurplePanel';
+import BPInnerPanel from '@/components/BPInnerPanel';
+
 export default function HomePage() {
 
-  const [size, setSize] = useState<SizeType>('large');
   return (
-    <div>
-      <div >
-        <Row justify="center" style={{color: 'white', backgroundColor: 'pink'}}>
-          <Col span={6}>
-            <Button type="primary" shape="round" size={size}>
-              Swap
-            </Button>
-          </Col>
-          <Col span={6}>
-            <Button type="primary" shape="round"  size={size}>
-              Liquidity
-            </Button>
-          </Col>
-        </Row>
+    <div style={{display: 'flex',flexDirection:'column',alignItems:'center'} }>
+      <div>
+        <SwitchTabs></SwitchTabs>
       </div>
-      <div style={{backgroundColor: 'white'}}>
-        <Row>
-          <Col span={24}>
-            <SwapBox/>
-          </Col>
-        </Row>
+      <div>
+        <BluePurplePanel>
+          <div style={{marginTop:'1.25rem'}}>
+            <BPInnerPanel></BPInnerPanel>
+            <BPInnerPanel></BPInnerPanel>
+          </div>
+        </BluePurplePanel>
       </div>
     </div>
 
