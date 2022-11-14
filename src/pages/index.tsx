@@ -1,5 +1,6 @@
 import BluePurplePanel from '@/components/BluePurplePanel';
 import BPInnerPanel from '@/components/BPInnerPanel';
+import ButtonWithBorder from '@/components/ButtonWithBorder';
 import SwitchTabs from '@/components/SwitchTabs';
 
 export default function HomePage() {
@@ -14,7 +15,17 @@ export default function HomePage() {
         <BluePurplePanel>
           <div style={{ marginTop: '1.25rem' }}>
             <BPInnerPanel></BPInnerPanel>
+          </div>
+          <div>
+            <div className=''>
+
+            </div>
+          </div>
+          <div>
             <BPInnerPanel></BPInnerPanel>
+          </div>
+          <div>
+            <ButtonWithBorder></ButtonWithBorder>
           </div>
         </BluePurplePanel>
       </div>

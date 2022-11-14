@@ -1,3 +1,3 @@
 export default function ButtonWithBorder() {
-  return <div></div>;
+  return (<button type="button" className="button-with-border">123</button>)
 }
