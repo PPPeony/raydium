@@ -1,12 +1,11 @@
-import path from 'path';
-import {defineConfig} from '@umijs/max'
-
+import { defineConfig } from '@umijs/max';
 
 export default defineConfig({
   npmClient: 'npm',
   routes: [
-    { 
-      path: '/', component: 'index' ,
+    {
+      path: '/',
+      component: 'index',
     },
   ],
   antd: {},
@@ -16,5 +15,5 @@ export default defineConfig({
   request: {},
   layout: false,
 
-  autoCSSModules: true
+  autoCSSModules: true,
 });

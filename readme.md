@@ -4,21 +4,21 @@
 
 1. use pnpm as pkg management
 
-    ```sh
-    # 1
-    pnpm install 
+   ```sh
+   # 1
+   pnpm install
 
-    # 2
+   # 2
 
-    pnpm dev
+   pnpm dev
 
-    # 3
-    pnpm build
-    ```
+   # 3
+   pnpm build
+   ```
 
 2. wallet adapter
 
-    Reference to [solana wallet adapter document](https://github.com/solana-labs/wallet-adapter/blob/master/APP.md)
+   Reference to [solana wallet adapter document](https://github.com/solana-labs/wallet-adapter/blob/master/APP.md)
 
 ## Concepts
 

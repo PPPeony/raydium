@@ -1,9 +1,6 @@
-import React from "react";
 import { Button, Form, Input } from 'antd';
 
-
 export default function SwapBox() {
-
   return (
     <Form
       name="basic"
@@ -12,17 +9,11 @@ export default function SwapBox() {
       initialValues={{ remember: true }}
       autoComplete="off"
     >
-      <Form.Item
-        label="Username"
-        name="username"
-      >
+      <Form.Item label="Username" name="username">
         <Input />
       </Form.Item>
 
-      <Form.Item
-        label="Password"
-        name="password"
-      >
+      <Form.Item label="Password" name="password">
         <Input />
       </Form.Item>
 
@@ -33,4 +24,4 @@ export default function SwapBox() {
       </Form.Item>
     </Form>
   );
-};
+}

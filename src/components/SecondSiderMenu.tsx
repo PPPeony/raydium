@@ -1,3 +1,1 @@
-export default function SecondSiderMenu() {
-  
-}
+export default function SecondSiderMenu() {}

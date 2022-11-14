@@ -1,19 +1,43 @@
-import React, { ReactNode, useCallback, useMemo } from 'react'
+import { ReactNode, useMemo } from 'react';
 
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base'
-import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react'
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import {
-  BackpackWalletAdapter, BitKeepWalletAdapter, BitpieWalletAdapter, BraveWalletAdapter, CloverWalletAdapter,
-  Coin98WalletAdapter, CoinbaseWalletAdapter, CoinhubWalletAdapter, ExodusWalletAdapter, GlowWalletAdapter,
-  LedgerWalletAdapter, MathWalletAdapter, PhantomWalletAdapter, SafePalWalletAdapter, SlopeWalletAdapter,
-  SolflareWalletAdapter, SolletExtensionWalletAdapter, SolletWalletAdapter, SolongWalletAdapter,
-  TokenPocketWalletAdapter, TorusWalletAdapter, TrustWalletAdapter, WalletConnectWalletAdapter
-} from '@solana/wallet-adapter-wallets'
-import { clusterApiUrl } from '@solana/web3.js'
+  ConnectionProvider,
+  WalletProvider,
+} from '@solana/wallet-adapter-react';
+import {
+  BackpackWalletAdapter,
+  BitKeepWalletAdapter,
+  BitpieWalletAdapter,
+  BraveWalletAdapter,
+  CloverWalletAdapter,
+  Coin98WalletAdapter,
+  CoinbaseWalletAdapter,
+  CoinhubWalletAdapter,
+  ExodusWalletAdapter,
+  GlowWalletAdapter,
+  LedgerWalletAdapter,
+  MathWalletAdapter,
+  PhantomWalletAdapter,
+  SafePalWalletAdapter,
+  SlopeWalletAdapter,
+  SolflareWalletAdapter,
+  SolletExtensionWalletAdapter,
+  SolletWalletAdapter,
+  SolongWalletAdapter,
+  TokenPocketWalletAdapter,
+  TorusWalletAdapter,
+  TrustWalletAdapter,
+  WalletConnectWalletAdapter,
+} from '@solana/wallet-adapter-wallets';
+import { clusterApiUrl } from '@solana/web3.js';
 
-export default function SolanaWalletProviders({ children }: { children?: ReactNode }) {
-
-  const endpoint = useMemo(() => clusterApiUrl('devnet'), [])
+export default function SolanaWalletProviders({
+  children,
+}: {
+  children?: ReactNode;
+}) {
+  const endpoint = useMemo(() => clusterApiUrl('devnet'), []);
   const wallets = useMemo(
     () => [
       new PhantomWalletAdapter(),
@@ -45,14 +69,14 @@ export default function SolanaWalletProviders({ children }: { children?: ReactNo
             name: 'Raydium',
             description: 'Raydium',
             url: 'https://raydium.io/',
-            icons: ['https://raydium.io/logo/logo-only-icon.svg']
-          }
-        }
+            icons: ['https://raydium.io/logo/logo-only-icon.svg'],
+          },
+        },
       }),
-      new BraveWalletAdapter()
+      new BraveWalletAdapter(),
     ],
-    [endpoint]
-  )
+    [endpoint],
+  );
 
   return (
     <ConnectionProvider endpoint={endpoint}>
@@ -60,5 +84,5 @@ export default function SolanaWalletProviders({ children }: { children?: ReactNo
         {children}
       </WalletProvider>
     </ConnectionProvider>
-  )
+  );
 }
