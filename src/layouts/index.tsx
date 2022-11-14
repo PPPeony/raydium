@@ -1,55 +1,16 @@
 import SolanaWalletsProvider from '@/components/SolanaWallets/Provider';
-import { Button, Col, Layout, MenuProps, Row } from 'antd';
+import { Col, Layout, Row } from 'antd';
 import React from 'react';
 import { Outlet } from 'umi';
 import Aside from './Aside';
 
 import './index.less';
 
-import Icon from '@/components/Icon';
-import IconWithoutBack from '@/components/IconWithoutBack';
-
-import logo from '../assets/logo/logo-with-text.svg';
-
-const items2: MenuProps['items'] = [
-  { label: 'Trading', svg: 'trade' },
-  { label: 'Swap', svg: 'swap' },
-  { label: 'Liquidity', svg: 'liquidity' },
-  { label: 'Concentrated', svg: 'concentrated-pools' },
-  { label: 'Pools', svg: 'pools' },
-  { label: 'Farms', svg: 'farms' },
-  { label: 'Staking', svg: 'staking' },
-  { label: 'AcceleRaytor', svg: 'acceleraytor' },
-  { label: 'Dropzone', svg: 'dropzone' },
-  { label: 'NFT', svg: 'nft' },
-].map((item, index) => {
-  const key = String(index + 1);
-  return {
-    key: `sub${key}`,
-    icon: <Icon src={item.svg} />,
-    label: item.label,
-  };
-});
-
-const items3: MenuProps['items'] = [
-  { label: 'PRC(Triton)', svg: 'settings' },
-  { label: 'Setting', svg: 'settings' },
-  { label: 'Community', svg: 'community' },
-  { label: 'Docs', svg: 'docs' },
-  { label: 'Raydium V1', svg: 'settings' },
-  { label: 'Feedback', svg: 'settings' },
-].map((item, index) => {
-  const key: string = String(index + 1);
-  return {
-    key: `sub${key}`,
-    icon: <IconWithoutBack src={item.svg} />,
-    label: item.label,
-  };
-});
+import Header from './Header';
 
 const App: React.FC = () => (
   <Layout className="outside-layout">
-    <header className="header">
+    {/* <header className="header">
       <div>
         <Row className="header-row" justify="space-between" align="middle">
           <Col className="header-row-col" span={4}>
@@ -88,7 +49,8 @@ const App: React.FC = () => (
           </Col>
         </Row>
       </div>
-    </header>
+    </header> */}
+    <Header />
     <Layout className="main-layout">
       <Row style={{ backgroundColor: '#131a35' }}>
         <Col>
