@@ -6,8 +6,17 @@
     "dev": "max dev",
     "format": "prettier --cache --write .",
     "postinstall": "max setup",
+    "prepare": "husky install",
     "setup": "max setup",
     "start": "npm run dev"
+  },
+  "lint-staged": {
+    "**/*.{less,md,json}": [
+      "prettier --config .prettierrc --write"
+    ],
+    "**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
   },
   "config": {
     "commitizen": {
@@ -23,7 +32,6 @@
     "@solana/wallet-adapter-wallets": "^0.19.5",
     "@solana/web3.js": "^1.66.2",
     "@umijs/max": "^4.0.30",
-    "antd": "^4.24.1",
     "bn.js": "^5.2.1"
   },
   "devDependencies": {
@@ -33,6 +41,8 @@
     "@umijs/lint": "^4.0.30",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.27.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "prettier-plugin-organize-imports": "^3.2.0",
     "prettier-plugin-packagejson": "^2.3.0",
