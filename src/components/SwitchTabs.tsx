@@ -1,20 +1,8 @@
-import { Col, Row } from "antd";
 export default function SwitchTabs() {
-
   return(
-    <div style={{margin: '2rem', backgroundColor: 'white'}}>
-      <Row justify='center' align="middle">
-        <Col>
-          <Row>
-            <Col>Swap</Col>
-          </Row>
-        </Col>
-        <Col>
-          <Row>
-            <Col>Swap</Col>
-          </Row>
-        </Col>
-      </Row>
+    <div className="switch-tabs bg-cyberpunk-card-bg rounded-full" style={{marginBottom: '3rem', backgroundColor: 'white'}}>
+      <div className="switch-tabs-tab text-white font-medium text-sm px-3 rounded-full tab1" >Swap</div>
+      <div className="switch-tabs-tab text-white font-medium text-sm px-3 rounded-full tab2">Liquidity</div>
     </div>
   )
 }

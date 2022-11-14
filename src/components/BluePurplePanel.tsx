@@ -9,6 +9,5 @@ interface BPPProps {children?: React.ReactNode }
         {props.children}
       </div>
     </div>
- 
   )
 }
