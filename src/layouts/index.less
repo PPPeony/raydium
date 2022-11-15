@@ -20,7 +20,10 @@ body {
   color: var(--primary);
   background-color: #131a35;
 }
-
+img {
+  display: block;
+  vertical-align: middle;
+}
 .outside-layout {
   height: 100%;
   display: flex;
@@ -150,14 +153,6 @@ body {
     linear-gradient(321.82deg, #18134d, #1b1659);
 }
 
-.bp-inner-panel {
-  display: flex;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  background-color: #13103e;
-}
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -294,6 +289,8 @@ body {
 .button-with-border {
   color: #3bd0d8;
   padding: 0.625rem 1rem;
+  border-radius: 0.75rem;
+  border-color: #58f3cd;
   background: linear-gradient(
     162deg,
     rgba(59, 208, 216, 0.2) 28.7%,
@@ -325,3 +322,4 @@ body {
 //     linear-gradient(270deg, rgba(0, 0, 0, 0.2) 0, transparent 13%),
 //     linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
 // }
+@import url('../style/BPInnerPanel.less');
