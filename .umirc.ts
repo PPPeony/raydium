@@ -8,6 +8,7 @@ export default defineConfig({
       component: 'index',
     },
   ],
+  dva:{},
   antd: {},
   access: {},
   model: {},
