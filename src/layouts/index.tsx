@@ -2,10 +2,10 @@ import SolanaWalletsProvider from '@/components/SolanaWallets/Provider';
 import { Col, Layout, Row } from 'antd';
 import React from 'react';
 import { Outlet } from 'umi';
+import classNames from 'classnames';
+
 import Aside from './Aside';
-
 import './index.less';
-
 import Header from './Header';
 
 const App: React.FC = () => (
@@ -51,17 +51,17 @@ const App: React.FC = () => (
       </div>
     </header> */}
     <Header />
-    <Layout className="main-layout">
-      <Row style={{ backgroundColor: '#131a35' }}>
-        <Col>
+    <Layout className="main-layout" >
+      <Row className='main-layout-row' style={{ backgroundColor: '#131a35' }}>
+        <Col className='main-layout-rol'>
           <Aside />
         </Col>
         <Col
+          className='main-layout-col'
           flex="auto"
           style={{
             borderTopLeftRadius: '1.25rem',
             backgroundColor: '#0c0927',
-            overflow: 'hidden',
           }}
         >
           <main style={{ padding: '3rem' }}>

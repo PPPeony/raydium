@@ -4,8 +4,11 @@ export default defineConfig({
   npmClient: 'npm',
   routes: [
     {
-      path: '/',
-      component: 'index',
+      path: '/', redirect: '/liquidity'
+    },
+    { 
+      path: '/liquidity', 
+      component: '@/pages/liqudity' 
     },
   ],
   dva:{},

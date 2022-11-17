@@ -1,0 +1,40 @@
+.bg-cyberpunk-card-bg {
+  background-image: linear-gradient(
+      140.14deg,
+      rgba(0, 182, 191, 0.15),
+      rgba(27, 22, 89, 0.1) 86.61%
+    ),
+    linear-gradient(321.82deg, #18134d, #1b1659);
+}
+@import url('@/style/base.less');
+.switch-tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem;
+  margin-bottom: 3rem;
+  background-color: 'pink';
+}
+.switch-tabs-tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 96px;
+  height: 2.25rem;
+  .pad-l-r-0p75rem();
+  color: #fff;
+  background: linear-gradient(
+    245.22deg,
+    rgb(218, 46, 239),
+    rgb(43, 106, 255),
+    rgb(57, 208, 216)
+  );
+  background-size: 200% 100%;
+  .rounded-full();
+}
+.switch-tabs-tab.tab1 {
+  background-position: 0%;
+}
+.switch-tabs-tab.tab2 {
+  background-position: 100%;
+}
