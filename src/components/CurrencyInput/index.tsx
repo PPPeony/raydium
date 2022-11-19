@@ -1,5 +1,8 @@
 import React, { useCallback, useState } from "react";
-import './index.less'
+import Styles from './index.less'
+import classNames from 'classnames/bind'
+const cx = classNames.bind(Styles)
+
 interface IInputProps{
   onChange: (v: string| number)=>void;
   symbol?: string
@@ -38,19 +41,19 @@ export default function CurrencyInput(props: IInputProps ) {
       props.onChange(props.balance/2)
     }
   }, [])
-
+  
   return (
-    <div className="bp-inner-panel">
-      <div className="bp-inner-panel-row">{`Balance: (Wallet not connected)`}</div>
+    <div className={cx('bp-inner-panel')}>
+      <div className={cx('bp-inner-panel-row')}>{`Balance: (Wallet not connected)`}</div>
       {/* 第二层 */}
-      <div className="bp-inner-panel-row">
+      <div className={cx('bp-inner-panel-row')}>
         {/* 图标 */}
-        <div className="panel-row-col">
-          <div className="col-icon">
-            <div className="icon-box-2rem">
-              <img className="bpinner-img" src={props.icon} alt="" />
+        <div className={cx('panel-row-col')}>
+          <div className={cx('col-icon')}>
+            <div className={cx('icon-box-2rem')}>
+              <img className={cx('bpinner-img')} src={props.icon} alt="" />
             </div>
-            <div className="icon-label">{props.symbol}</div>
+            <div className={cx('icon-label')}>{props.symbol}</div>
             <div style={{width: 12}}>
               <img src={require('@/assets/icons/msic-exchange.svg').default} alt="" />
             </div>
