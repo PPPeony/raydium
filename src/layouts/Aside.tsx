@@ -34,8 +34,8 @@ const items3: MenuProps['items'] = [
   { label: 'Setting', svg: 'settings' },
   { label: 'Community', svg: 'community' },
   { label: 'Docs', svg: 'docs' },
-  { label: 'Raydium V1', svg: 'settings' },
-  { label: 'Feedback', svg: 'settings' },
+  { label: 'Raydium V1', svg: 'raydium' },
+  { label: 'Feedback', svg: 'feedback' },
 ].map((item, index) => {
   const key: string = String(index + 1);
   return {

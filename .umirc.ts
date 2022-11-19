@@ -10,6 +10,24 @@ export default defineConfig({
       path: '/liquidity', 
       component: '@/pages/liqudity' 
     },
+    { 
+      path: '/swap', 
+    },
+    { 
+      path: '/concentrated', 
+    },
+    { 
+      path: '/pools', 
+    },
+    { 
+      path: '/farms', 
+    },
+    { 
+      path: '/staking', 
+    },
+    { 
+      path: '/acceleraytor', 
+    },
   ],
   dva:{},
   antd: {},

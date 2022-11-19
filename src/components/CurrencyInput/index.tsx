@@ -4,10 +4,11 @@ interface BPInnerPanelProps {
   icon?: React.ReactNode,
 }
 
-export default function BPInnerPanel({value,onInp}) {
-  
+export default function CurrencyInput({value,onChange}) {
   const handleInput = (e)=>{
-    onInp(e.target.value)
+    //console.log(e.target.value)
+    const newValue = e.target.value
+    onChange(value, newValue)
   };
 
   return (
@@ -30,7 +31,7 @@ export default function BPInnerPanel({value,onInp}) {
         {/* 分割线 */}
         <div className="bpinner-panel-divider"></div>
         {/* 两个小按钮 */}
-        <div className="flex flex-space-between">
+        <div className="bpinner-button-input">
           <div className="bpinner-button-wrap">
             <button type="button" className="bpinner-button" >Max</button>
             <button type="button" className="bpinner-button" >Half</button>
