@@ -26,12 +26,11 @@ export default function HomePage() {
     setOthCur(curTwo)
   },[])
 
-  let displayFlag = false;
+  const [displayFlag,setDisplayFlag ]= useState(false);
+  const [displayValue,setDisplayValue ]= useState('none');
   const changeDisplay = () => {
-    if(displayFlag === false) {
-
-    }
-    displayFlag = !displayFlag;
+    setDisplayValue( displayFlag ? 'flex' : 'none');
+    setDisplayFlag (!displayFlag);
   }
   
   return (
@@ -91,17 +90,17 @@ export default function HomePage() {
               <div className='data-table-row-r'>{formatNumber(90515.56) + ' LP'}</div>
             </div>
             <div className='more-info-wrap'>
-              <div className='address-tolerance'>
+              <div className='address-tolerance' style={{display: displayValue}}>
                 <div className='address'>{'Address'}</div>
                 <div className='tolerance'>
                   <div>{'Slippage Tolerance'}</div>
                   <div className='tolerance-input'>
-                    <input type="text" placeholder='12' value={2} className='number-input' onChange={changeDisplay}/>
+                    <input type="text" placeholder='12' value={2} className='number-input' onChange={()=>{}}/>
                     <div className='percent'>%</div>
                   </div>
                 </div>
               </div>
-              <div className='more-info' >{'More infomation'}</div>
+              <div className='more-info' onClick={changeDisplay} >{'More infomation'}</div>
             </div>
           </div>
           {/* 底部button */}
