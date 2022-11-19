@@ -8,7 +8,7 @@ export default defineConfig({
     },
     { 
       path: '/liquidity', 
-      component: '@/pages/liqudity' 
+      component: '@/pages/liquidity' 
     },
     { 
       path: '/swap', 

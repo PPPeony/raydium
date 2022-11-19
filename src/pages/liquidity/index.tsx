@@ -1,5 +1,7 @@
 import { Progress } from 'antd';
 import { useCallback, useState } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'dva'
+
 
 
 import BluePurplePanel from '@/components/BluePurplePanel';
@@ -9,22 +11,73 @@ import SwitchTabs from '@/components/SwitchTabs';
 
 import {formatNumber} from '@/utils/formatNumber'
 
-// import plusSvg from '@/assets/icons/msic-plus.svg';
-// import searchSvg from '@/assets/icons/msic-search.svg';
+import {ILiquidityState} from './model'
 
 import './index.less'
+interface ICurrency {
+  symbol?: string;
+  icon?: string;
+  amount?: number;
+}
 
-export default function HomePage() {
-  const [exchangeRate,setExchangeRate] = useState(0.014644);
-  // 第一个币种
-  const [currencyOne,setCurrencyOne] = useState('');
-  // 第二个币种
-  const [currencyTwo,setCurrencyTwo] = useState('');
 
-  const handleCurrencyInputed = useCallback((setCur,setOthCur) => (curOne:string,curTwo:string) => {
-    setCur(curOne);
-    setOthCur(curTwo)
-  },[])
+const useCurrency = (base: ICurrency, quote: ICurrency)=>{
+ const [baseState, setBaseState] =  useState<ICurrency>({
+  icon: base.icon,
+  amount: base.amount,
+  symbol: base.symbol
+ });
+ const [quoteState, setQuoteState] =  useState<ICurrency>({
+  icon: quote.icon,
+  amount: quote.amount,
+  symbol: quote.symbol
+ });
+
+ return {
+  baseCurrencyState: baseState,
+  quoteCurrencyState: quoteState,
+  changeAmount: (baseAmount: number, quoteAmount: number)=>{
+    setBaseState({
+      amount: baseAmount,
+      symbol: baseState.symbol,
+      icon: baseState.icon,
+    })
+    setQuoteState({
+      amount: quoteAmount,
+      symbol: quoteState.symbol,
+      icon: quoteState.icon,
+    })
+  }
+ }
+
+}
+
+
+export default function Liquidity() {
+
+  const dispatch = useDispatch();
+
+  const {poolInfo} = useSelector((state:{liquidity: ILiquidityState})=>{
+    return state.liquidity
+  }, shallowEqual);
+
+  const {baseCurrencyState, quoteCurrencyState, changeAmount} = useCurrency(
+    {symbol: poolInfo?.baseToken.symbol, icon: poolInfo?.baseIcon}, 
+    {symbol: poolInfo?.quoteToken.symbol, icon: poolInfo?.quoteIcon}, 
+    );
+
+  const onCurrencyInputChange = (direction: 'base' | 'quote', value: number)=>{
+    if(!poolInfo){
+      return
+    }
+     // normal number 
+     let rate = poolInfo?.rate;
+     if(direction === 'base'){
+       changeAmount(value,value*rate)
+     }else{
+       changeAmount(value/rate, value)
+     }
+  }
 
   const [displayFlag,setDisplayFlag ]= useState(false);
   const [displayValue,setDisplayValue ]= useState('none');
@@ -42,7 +95,11 @@ export default function HomePage() {
         <BluePurplePanel>
           {/* 第一个input */}
           <div className='bpinnerpanel-wrap wrap1'>
-            <CurrencyInput rate={(exchangeRate+1)} value={currencyOne} onChange={handleCurrencyInputed(setCurrencyOne,setCurrencyTwo)}></CurrencyInput >
+            <CurrencyInput 
+            value={baseCurrencyState.amount} 
+            symbol={baseCurrencyState.symbol}
+            icon={baseCurrencyState.icon} 
+            onChange={(value)=>onCurrencyInputChange('base', value)}/>
           </div>
           {/* 中间间隔区域 */}
           <div className='partition-box'>
@@ -52,7 +109,7 @@ export default function HomePage() {
               </div>
               <div>
                 <div className='flex text-ABC4FF font-size-14px'>
-                  1 RAY ≈ 0.014644 SOL
+                  {`1 ${baseCurrencyState.symbol} ≈ ${poolInfo?.rate} ${quoteCurrencyState.symbol}`}
                   <div> &nbsp;⇋</div>
                 </div>
               </div>
@@ -69,7 +126,11 @@ export default function HomePage() {
           </div>
           {/* 第二个input */}
           <div className='bpinnerpanel-wrap'>
-            <CurrencyInput rate={1/(1+exchangeRate)} value={currencyTwo} onChange={handleCurrencyInputed(setCurrencyTwo,setCurrencyOne)}></CurrencyInput>
+            <CurrencyInput
+              value={quoteCurrencyState.amount}
+              symbol={quoteCurrencyState.symbol}
+              icon={quoteCurrencyState.icon}
+              onChange={(value)=>onCurrencyInputChange('quote', value)}/>
           </div>
           {/* data table */}
           <div className='data-table'>

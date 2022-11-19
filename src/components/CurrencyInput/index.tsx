@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import './index.less'
-interface BPInnerPanelProps {
-  icon?: React.ReactNode,
+interface IInputProps{
+  onChange: (v: string| number)=>void;
+  symbol?: string
+  icon?: string;
+  value?: number;
+  balance?: number // undefined indicates no wallet connected. 0 means balance is 0 
 }
 
-export default function CurrencyInput({value,rate,onChange}) {
-  const handleInput = (e)=>{
-    let pastCur = value;
+export default function CurrencyInput(props: IInputProps ) {
+  const handleInput = useCallback((e)=>{
+    let pastCur = props.value;
     let nowCur = e.target.value;
 
     let curOne = '';
@@ -21,10 +25,19 @@ export default function CurrencyInput({value,rate,onChange}) {
       }
       // 小数，整数
       curOne = nowCur;
-      curTwo = (rate * Number.parseFloat(nowCur)).toString();
+      // curTwo = (rate * Number.parseFloat(nowCur)).toString();
     }
-    onChange(curOne, curTwo)
-  };
+    props.onChange(curOne)
+  }, [])
+
+  const handlePreset = useCallback((type: 'max' | 'half')=>{
+    if(!props.balance)return;
+    if(type === 'max'){
+      props.onChange(props.balance)
+    }else{
+      props.onChange(props.balance/2)
+    }
+  }, [])
 
   return (
     <div className="bp-inner-panel">
@@ -35,9 +48,9 @@ export default function CurrencyInput({value,rate,onChange}) {
         <div className="panel-row-col">
           <div className="col-icon">
             <div className="icon-box-2rem">
-              <img className="bpinner-img" src={require('/src/assets/img/ray.png')} alt="" />
+              <img className="bpinner-img" src={props.icon} alt="" />
             </div>
-            <div className="icon-label">RAY</div>
+            <div className="icon-label">{props.symbol}</div>
             <div style={{width: 12}}>
               <img src={require('@/assets/icons/msic-exchange.svg').default} alt="" />
             </div>
@@ -48,11 +61,11 @@ export default function CurrencyInput({value,rate,onChange}) {
         {/* 两个小按钮 */}
         <div className="bpinner-button-input">
           <div className="bpinner-button-wrap">
-            <button type="button" className="bpinner-button" >Max</button>
-            <button type="button" className="bpinner-button" >Half</button>
+            <button type="button" className="bpinner-button" onClick={()=>handlePreset('max')}>Max</button>
+            <button type="button" className="bpinner-button" onClick={()=>handlePreset('half')}>Half</button>
           </div> 
           <div >
-            <input className="bpinner-panel-input" placeholder="" value={value} onChange={handleInput}></input>
+            <input className="bpinner-panel-input" placeholder="" value={props.value} onChange={handleInput}></input>
           </div>
         </div>
       </div>
