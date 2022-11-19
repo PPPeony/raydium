@@ -21,44 +21,18 @@ export default function HomePage() {
   // 第二个币种
   const [currencyTwo,setCurrencyTwo] = useState('');
 
-  const handleCurrencyInputed = useCallback((setCur,setOthCur, rate) => (preCur:string,cur:string) => {
-    let nowCur = cur;
-    let pastCur = preCur;
-    let curOne = '';
-    let curTwo = '';
-    if(/^\D*$/.test(nowCur)) {
-      curOne = '';
-      curTwo = '';
-    } else {
-      // if (/(^[0-9]+\.[0-9]*$)|(^[0-9]+$)/.test(nowCur) === false) {
-      //   // NaN 形如1a, 就会退回非数字的部分
-      //   nowCur = pastCur;
-      // }
-      if (/(^[0-9]+\.?[0-9]*$)/.test(nowCur) === false) {
-        // NaN 形如1a, 就会退回非数字的部分
-        nowCur = pastCur;
-      }
-      // 小数，整数
-      curOne = nowCur;
-      curTwo = (rate * Number.parseFloat(nowCur)).toString();
-    }
-    // console.log('curOne: ' + curOne, 'curTwo: ' + curTwo)
-
+  const handleCurrencyInputed = useCallback((setCur,setOthCur) => (curOne:string,curTwo:string) => {
     setCur(curOne);
     setOthCur(curTwo)
+  },[])
 
-    // setCur(Number.parseFloat(curOne) || '');
-    // setOthCur(rate * Number.parseFloat(curTwo) || '')
-    // console.log('cu1: '+currencyOne + ' cur2:' + currencyTwo)
-  },[exchangeRate])
+  let displayFlag = false;
+  const changeDisplay = () => {
+    if(displayFlag === false) {
 
-  // let displayFlag = false;
-  // const changeDisplay = () => {
-  //   if(displayFlag === false) {
-
-  //   }
-  //   displayFlag = !displayFlag;
-  // }
+    }
+    displayFlag = !displayFlag;
+  }
   
   return (
     <div className='liquidity-box'>
@@ -69,7 +43,7 @@ export default function HomePage() {
         <BluePurplePanel>
           {/* 第一个input */}
           <div className='bpinnerpanel-wrap wrap1'>
-            <CurrencyInput value={currencyOne} onChange={handleCurrencyInputed(setCurrencyOne,setCurrencyTwo,(1+exchangeRate))}></CurrencyInput >
+            <CurrencyInput rate={(exchangeRate+1)} value={currencyOne} onChange={handleCurrencyInputed(setCurrencyOne,setCurrencyTwo)}></CurrencyInput >
           </div>
           {/* 中间间隔区域 */}
           <div className='partition-box'>
@@ -96,7 +70,7 @@ export default function HomePage() {
           </div>
           {/* 第二个input */}
           <div className='bpinnerpanel-wrap'>
-            <CurrencyInput value={currencyTwo} onChange={handleCurrencyInputed(setCurrencyTwo,setCurrencyOne,1/(1+exchangeRate))}></CurrencyInput>
+            <CurrencyInput rate={1/(1+exchangeRate)} value={currencyTwo} onChange={handleCurrencyInputed(setCurrencyTwo,setCurrencyOne)}></CurrencyInput>
           </div>
           {/* data table */}
           <div className='data-table'>
@@ -122,7 +96,7 @@ export default function HomePage() {
                 <div className='tolerance'>
                   <div>{'Slippage Tolerance'}</div>
                   <div className='tolerance-input'>
-                    <input type="text" placeholder='12' value={2} className='number-input'/>
+                    <input type="text" placeholder='12' value={2} className='number-input' onChange={changeDisplay}/>
                     <div className='percent'>%</div>
                   </div>
                 </div>

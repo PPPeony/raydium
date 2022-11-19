@@ -4,11 +4,26 @@ interface BPInnerPanelProps {
   icon?: React.ReactNode,
 }
 
-export default function CurrencyInput({value,onChange}) {
+export default function CurrencyInput({value,rate,onChange}) {
   const handleInput = (e)=>{
-    //console.log(e.target.value)
-    const newValue = e.target.value
-    onChange(value, newValue)
+    let pastCur = value;
+    let nowCur = e.target.value;
+
+    let curOne = '';
+    let curTwo = '';
+    if(/^\D*$/.test(nowCur)) {
+      curOne = '';
+      curTwo = '';
+    } else {
+      if (/(^[0-9]+\.?[0-9]*$)/.test(nowCur) === false) {
+        // NaN 形如1a, 就会退回非数字的部分
+        nowCur = pastCur;
+      }
+      // 小数，整数
+      curOne = nowCur;
+      curTwo = (rate * Number.parseFloat(nowCur)).toString();
+    }
+    onChange(curOne, curTwo)
   };
 
   return (
