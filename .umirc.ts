@@ -36,6 +36,4 @@ export default defineConfig({
   initialState: {},
   request: {},
   layout: false,
-
-  autoCSSModules: true,
 });
