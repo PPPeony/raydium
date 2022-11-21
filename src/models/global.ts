@@ -1,13 +1,15 @@
 import { IBaseModelType, ModelState } from '@/models/connectModel';
 
-import { PublicKey } from '@solana/web3.js';
+import { WalletContextState } from '@solana/wallet-adapter-react';
+import { Connection } from '@solana/web3.js';
 
 /** MARK - namespace */
 export const NAME_SPACE = 'global';
 
 /** MARK - model definition */
 export interface IGlobalState extends ModelState {
-  wallet?: PublicKey;
+  wallet?: WalletContextState;
+  connection?: Connection;
 }
 
 /** MARK - defalut state */
@@ -19,7 +21,7 @@ const modelConfig: IBaseModelType<IGlobalState> = {
   state: defaultState,
   reducers: {
     setWallet(state: IGlobalState, { payload }) {
-      return { ...state, wallet: payload };
+      return { ...state, ...payload };
     },
   },
   effects: {

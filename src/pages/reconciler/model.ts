@@ -1,47 +1,131 @@
-import { IBaseModelType, ModelState } from '@/models/connectModel';
+import { IBaseModelType, ModelState } from '@/models/connectModel.d';
 
 import LiquidityPoolJSON from '@/constants/liquidityPools.json';
 import TokenJSON from '@/constants/tokens.json';
-import { LiquidityPoolInfo, Token } from '@raydium-io/raydium-sdk';
+import { IGlobalState } from '@/models/global';
+
+import { message } from 'antd';
+import * as services from './service';
 
 /** MARK - namespace */
 export const NAME_SPACE = 'reconciler';
+
+/** MARK - model definition */
+
+import type { LiquidityPoolInfo } from '@raydium-io/raydium-sdk';
+import BN from 'bn.js';
+
+export type IToken = {
+  symbol: string;
+  name: string;
+  mint: string;
+  decimals: number;
+  extensions: any;
+  icon: string;
+};
+
+export type IPoolInfo = LiquidityPoolInfo & {
+  baseToken: IToken;
+  quoteToken: IToken;
+  rate: BN;
+};
+
+export type IFilterInfo = {
+  base?: string;
+  quote?: string;
+};
+export interface IReconcilerState extends ModelState {
+  filterInfo?: IFilterInfo;
+  poolInfo?: IPoolInfo;
+}
 
 /** MARK - datasource */
 export const LIQUIDITY_POOL_LIST = [
   ...LiquidityPoolJSON.official,
   ...LiquidityPoolJSON.unOfficial,
 ];
-export const TOKEN_LIST = [...TokenJSON.official, ...TokenJSON.unOfficial];
-
-/** MARK - model definition */
-export type IToken = Token & { icon: string };
-
-export interface IReconcilerState extends ModelState {
-  poolInfo?: LiquidityPoolInfo & {
-    rate: number;
-    baseToken: IToken;
-    quoteToken: IToken;
-  };
-}
+export const TOKEN_LIST: IToken[] = [
+  ...TokenJSON.official,
+  ...TokenJSON.unOfficial,
+];
 
 /** MARK - defalut state */
-const defaultState: IReconcilerState = {};
+const defaultState: IReconcilerState = {
+  filterInfo: {
+    // default liquidity pair (AHT-USDT)
+    base: 'AHT1yynTv45s3P3KrRfQCVMHckdHeMVA3fteEg34xt9y',
+    quote: 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB',
+  },
+};
+
+/** MARK - some useful funcitons */
+
+const combineMint = (mint1: string, mint2: string) => {
+  if (mint1 < mint2) {
+    return `${mint1}_${mint2}`;
+  }
+  return `${mint2}_${mint1}`;
+};
 
 /** MARK -  reducers & effects */
 
 const modelConfig: IBaseModelType<IReconcilerState> = {
-  namespace: 'reconciler',
+  namespace: NAME_SPACE,
   state: defaultState,
   reducers: {
+    setFilterInfo(state, { payload }) {
+      return { ...state, filterInfo: payload };
+    },
     setPoolInfo(state, { payload }) {
       return { ...state, poolInfo: payload };
     },
   },
   effects: {
-    *getPoolInfo({ opt }, { put, call }) {
-      // const res = yield call(services.getPoolInfo);
-      // yield put({ type: 'setPoolInfo', payload: res });
+    *getPoolInfo({ opt }, { put, call, select }) {
+      if (opt.base && opt.quote) {
+        // 1. find target pool
+        const poolJSON = LIQUIDITY_POOL_LIST.find(
+          (item) =>
+            combineMint(item.baseMint, item.quoteMint) ===
+            combineMint(opt.base, opt.quote),
+        );
+        // no pool found
+        if (!poolJSON) {
+          message.warning('No pool found!');
+          return;
+        }
+        // 2. get remote pool info
+        const connection = yield select((state: { global: IGlobalState }) => {
+          return state.global.connection;
+        });
+        if (!connection) {
+          message.error('connection is not available');
+          return;
+        }
+        const remotePoolInfo = yield call(
+          services.getRemotePoolInfo,
+          connection,
+          poolJSON,
+        );
+
+        // 3. construct token info
+        const baseToken = TOKEN_LIST.find((item) => item.mint === opt.base);
+        const quoteToken = TOKEN_LIST.find((item) => item.mint === opt.quote);
+        yield put({
+          type: 'setPoolInfo',
+          payload: {
+            ...remotePoolInfo,
+            baseToken,
+            quoteToken,
+            rate: remotePoolInfo.quoteReserve
+              .muln(remotePoolInfo.baseDecimals)
+              .div(
+                remotePoolInfo.baseReserve.muln(remotePoolInfo.quoteDecimals),
+              ),
+          },
+        });
+      }
+      yield put({ type: 'setFilterInfo', payload: opt });
     },
 
     *addLiquidity(action, { put, call }) {
@@ -59,40 +143,3 @@ const modelConfig: IBaseModelType<IReconcilerState> = {
 };
 
 export default modelConfig;
-
-// const mockPoolInfo = {
-//   status: new BN(6),
-//   baseDecimals: 9,
-//   quoteDecimals: 6,
-//   lpDecimals: 9,
-//   baseReserve: new BN(14594941029357),
-//   quoteReserve: new BN(16994850344),
-//   lpSupply: new BN(22136850605115),
-//   startTime: new BN(1657721409),
-// };
-// const baseReserve =
-//   mockPoolInfo.baseReserve.toNumber() / 10 ** mockPoolInfo.baseDecimals;
-// const quoteReserve =
-//   mockPoolInfo.quoteReserve.toNumber() / 10 ** mockPoolInfo.quoteDecimals;
-// const mokeRate = quoteReserve / baseReserve;
-
-/**
-poolInfo: {
-    ...mockPoolInfo,
-    // other properties
-    rate: mokeRate,
-    baseIcon: require('/src/assets/img/ray.png'),
-    quoteIcon: require('/src/assets/img/ray.png'),
-    baseToken: new Token(
-      new PublicKey('AHT1yynTv45s3P3KrRfQCVMHckdHeMVA3fteEg34xt9y'),
-      9,
-      'AHT',
-    ),
-    quoteToken: new Token(
-      new PublicKey('Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB'),
-      6,
-      'USDT',
-    ),
-  },
-
- */
