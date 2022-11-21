@@ -10,53 +10,7 @@ import { IDVAConnectState } from '@/models/connectModel';
 import TokenSelectArea from './components/TokenSelectArea';
 import { IFilterInfo, IReconcilerState, NAME_SPACE } from './model';
 
-interface ICurrency {
-  symbol?: string;
-  icon?: string;
-  amount?: number;
-}
-
-const useCurrency = (base: ICurrency, quote: ICurrency) => {
-  const [baseState, setBaseState] = useState<ICurrency>({
-    icon: base.icon,
-    amount: base.amount,
-    symbol: base.symbol,
-  });
-  const [quoteState, setQuoteState] = useState<ICurrency>({
-    icon: quote.icon,
-    amount: quote.amount,
-    symbol: quote.symbol,
-  });
-
-  return {
-    baseCurrencyState: baseState,
-    quoteCurrencyState: quoteState,
-    changeAmount: (baseAmount: number, quoteAmount: number) => {
-      setBaseState({
-        amount: baseAmount,
-        symbol: baseState.symbol,
-        icon: baseState.icon,
-      });
-      setQuoteState({
-        amount: quoteAmount,
-        symbol: quoteState.symbol,
-        icon: quoteState.icon,
-      });
-    },
-    resetAmount: () => {
-      setBaseState({
-        symbol: baseState.symbol,
-        icon: baseState.icon,
-      });
-      setQuoteState({
-        symbol: quoteState.symbol,
-        icon: quoteState.icon,
-      });
-    },
-  };
-};
-
-export default function Liquidity() {
+export default function Reconciler() {
   const dispatch = useDispatch();
   const wallet = useWallet();
   const walletModal = useWalletModal();
@@ -71,11 +25,6 @@ export default function Liquidity() {
     shallowEqual,
   );
 
-  // const { baseCurrencyState, quoteCurrencyState, changeAmount, resetAmount } =
-  //   useCurrency(
-  //     { symbol: poolInfo?.baseToken.symbol, icon: poolInfo?.baseIcon },
-  //     { symbol: poolInfo?.quoteToken.symbol, icon: poolInfo?.quoteIcon },
-  //   );
   const handleSelectChange = useCallback((data: IFilterInfo) => {
     dispatch({
       type: `${NAME_SPACE}/getPoolInfo`,
@@ -83,7 +32,7 @@ export default function Liquidity() {
     });
   }, []);
 
-  // initi
+  // init
   useEffect(() => {
     dispatch({
       type: `${NAME_SPACE}/getPoolInfo`,

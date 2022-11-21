@@ -1,6 +1,5 @@
 // .eslintrc.js
 module.exports = {
-  // Umi 项目
   extends: ['prettier', 'plugin:react/recommended'],
   parser: require.resolve('@babel/eslint-parser'),
   plugins: ['prettier', 'react', 'react-hooks'],
