@@ -15,7 +15,7 @@
       "prettier --config .prettierrc --write"
     ],
     "**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
+      "eslint --config .eslintrc.js --fix"
     ]
   },
   "config": {
@@ -32,6 +32,7 @@
     "@solana/wallet-adapter-wallets": "^0.19.5",
     "@solana/web3.js": "^1.66.2",
     "@umijs/max": "^4.0.30",
+    "antd": "^5.0.0",
     "bn.js": "^5.2.1",
     "classnames": "^2.3.2",
     "dva": "^2.6.0-beta.22"

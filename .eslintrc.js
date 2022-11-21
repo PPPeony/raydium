@@ -29,12 +29,12 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
         'react/react-in-jsx-scope': 'off',
+        '@typescript-eslint/no-unused-vars': 'warn',
       },
     },
   ],
-
   rules: {
     'prettier/prettier': 'error',
-    '@typescript-eslint/no-unused-vars': 'warn',
+    'no-unused-vars': 'warn',
   },
 };
