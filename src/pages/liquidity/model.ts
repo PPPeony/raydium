@@ -1,33 +1,35 @@
-import { LiquidityPoolInfo,Token } from '@raydium-io/raydium-sdk';
-import {PublicKey} from '@solana/web3.js'
-import BN from 'bn.js'
+import { LiquidityPoolInfo, Token } from '@raydium-io/raydium-sdk';
+import { PublicKey } from '@solana/web3.js';
+import BN from 'bn.js';
 import * as services from './service';
 
 export interface ILiquidityState {
   poolInfo?: LiquidityPoolInfo & {
-    rate: number
-    baseIcon: string
-    quoteIcon: string
-    baseToken: Token
-    quoteToken: Token
+    rate: number;
+    baseIcon: string;
+    quoteIcon: string;
+    baseToken: Token;
+    quoteToken: Token;
   };
 }
 
-// mock properties from remote.  
+// mock properties from remote.
 // todo: get below fields dynamic
 const mockPoolInfo = {
-    status: new BN(6),
-    baseDecimals: 9,
-    quoteDecimals: 6,
-    lpDecimals: 9,
-    baseReserve: new BN(14594941029357),
-    quoteReserve: new BN(16994850344),
-    lpSupply: new BN(22136850605115),
-    startTime: new BN(1657721409),
-}
-const baseReserve = mockPoolInfo.baseReserve.toNumber() / 10 ** mockPoolInfo.baseDecimals;
-const quoteReserve = mockPoolInfo.quoteReserve.toNumber() / 10 ** mockPoolInfo.quoteDecimals;
-const mokeRate = quoteReserve/baseReserve
+  status: new BN(6),
+  baseDecimals: 9,
+  quoteDecimals: 6,
+  lpDecimals: 9,
+  baseReserve: new BN(14594941029357),
+  quoteReserve: new BN(16994850344),
+  lpSupply: new BN(22136850605115),
+  startTime: new BN(1657721409),
+};
+const baseReserve =
+  mockPoolInfo.baseReserve.toNumber() / 10 ** mockPoolInfo.baseDecimals;
+const quoteReserve =
+  mockPoolInfo.quoteReserve.toNumber() / 10 ** mockPoolInfo.quoteDecimals;
+const mokeRate = quoteReserve / baseReserve;
 
 const initialState: ILiquidityState = {
   poolInfo: {
@@ -36,9 +38,17 @@ const initialState: ILiquidityState = {
     rate: mokeRate,
     baseIcon: require('/src/assets/img/ray.png'),
     quoteIcon: require('/src/assets/img/ray.png'),
-    baseToken: new Token(new PublicKey('AHT1yynTv45s3P3KrRfQCVMHckdHeMVA3fteEg34xt9y'), 9, 'AHT'),
-    quoteToken: new Token(new PublicKey('Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB'), 6, 'USDT'),
-  }
+    baseToken: new Token(
+      new PublicKey('AHT1yynTv45s3P3KrRfQCVMHckdHeMVA3fteEg34xt9y'),
+      9,
+      'AHT',
+    ),
+    quoteToken: new Token(
+      new PublicKey('Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB'),
+      6,
+      'USDT',
+    ),
+  },
 };
 
 export default {
@@ -56,13 +66,13 @@ export default {
     },
 
     *addLiquidity(action, { put, call }) {
-      console.log(action)
+      console.log(action);
       // const res = yield call(services.getPoolInfo);
       yield put({ type: 'setPoolInfo', payload: {} });
     },
 
     *swap(action, { put, call }) {
-      console.log(action)
+      console.log(action);
       // const res = yield call(services.getPoolInfo);
       yield put({ type: 'setPoolInfo', payload: {} });
     },

@@ -1,28 +1,26 @@
-import {useDispatch } from 'dva'
+import { useDispatch } from 'dva';
 
-import {
-  WalletModalProvider,
-  WalletMultiButton,
-} from '@solana/wallet-adapter-react-ui';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 import { useWallet } from '@solana/wallet-adapter-react';
 
-import '@solana/wallet-adapter-react-ui/styles.css';
-import { useCallback, useEffect } from 'react';
-
-
-export default () => {
-  const dispatch = useDispatch()
-
+// import '@solana/wallet-adapter-react-ui/styles.css';
+import { useEffect } from 'react';
+const WalletButton = () => {
+  const dispatch = useDispatch();
   const wallet = useWallet();
-  useEffect(()=>{
+  useEffect(() => {
     dispatch({
       type: 'global_state/setWallet',
-      payload: wallet
-    })
-  }, [wallet])
+      payload: wallet,
+    });
+  }, []);
 
-  return (<WalletModalProvider>
-  <WalletMultiButton/>
-</WalletModalProvider>)
-}
+  return (
+    // <WalletModalProvider>
+    <WalletMultiButton />
+    // </WalletModalProvider>
+  );
+};
+
+export default WalletButton;

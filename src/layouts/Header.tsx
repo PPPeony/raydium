@@ -1,4 +1,4 @@
-import Wallet from '@/components/SolanaWallets/Wallet';
+import WalletBtn from '@/components/SolanaWallets/Wallet';
 import { Col, Row } from 'antd';
 import React from 'react';
 import './index.less';
@@ -31,8 +31,7 @@ const Header: React.FC = () => (
             </svg>
           </Col>
           <Col>
-            <Wallet />
-            {/* <Button type="primary" className='header-row-col-button' style={{width:160,height: 44}}>Connect Wallet</Button> */}
+            <WalletBtn />
           </Col>
         </Row>
       </Col>

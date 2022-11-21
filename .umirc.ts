@@ -11,6 +11,10 @@ export default defineConfig({
       component: '@/pages/liquidity' 
     },
     { 
+      path: '/reconciler', 
+      component: '@/pages/reconciler' 
+    },
+    { 
       path: '/swap', 
     },
     { 
@@ -30,7 +34,9 @@ export default defineConfig({
     },
   ],
   dva:{},
-  antd: {},
+  antd: {
+    import: false
+  },
   access: {},
   model: {},
   initialState: {},

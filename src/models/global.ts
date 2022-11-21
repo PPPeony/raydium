@@ -1,18 +1,35 @@
+import { IBaseModelType, ModelState } from '@/models/connectModel';
+
 import { PublicKey } from '@solana/web3.js';
 
-interface IGlobalState {
+/** MARK - namespace */
+export const NAME_SPACE = 'global';
+
+/** MARK - model definition */
+export interface IGlobalState extends ModelState {
   wallet?: PublicKey;
 }
 
-const initialState: IGlobalState = {};
+/** MARK - defalut state */
+const defaultState: IGlobalState = {};
 
-export default {
-  namespace: 'global_state',
-  state: initialState,
+/** MARK -  reducers & effects */
+const modelConfig: IBaseModelType<IGlobalState> = {
+  namespace: NAME_SPACE,
+  state: defaultState,
   reducers: {
-    setWallet(state: IGlobalState, { payload }: any) {
+    setWallet(state: IGlobalState, { payload }) {
       return { ...state, wallet: payload };
     },
   },
-  effects: {},
+  effects: {
+    *changeWallet({ payload }, { put, call }) {
+      yield put({
+        type: 'setWallet',
+        payload,
+      });
+    },
+  },
 };
+
+export default modelConfig;

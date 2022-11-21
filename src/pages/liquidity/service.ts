@@ -1,3 +1,3 @@
-export const getPoolInfo = async ()=>{
-    
-}
+export const getPoolInfo = async () => {
+  //
+};
