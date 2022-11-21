@@ -1,7 +1,31 @@
 {
-  "extends": "./src/.umi/tsconfig.json",
   "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "baseUrl": "./",
+    "strict": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
-    "preserveSymlinks": true
-  }
+    "paths": {
+      "@/*": ["src/*"],
+      "@@/*": ["src/.umi/*"],
+      "@umijs/max": ["./node_modules/umi"],
+      "@umijs/max/typings": ["src/.umi/typings"]
+    }
+  },
+  "include": [
+    "./typings.d.ts",
+    "./src/.umi/typings.d.ts",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./*.ts",
+    "./*.tsx"
+  ],
+  "exclude": ["node_modules"]
 }
