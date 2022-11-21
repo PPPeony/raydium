@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import Styles from './index.less'
+import { inputDebounce } from "@/utils/inputDebounce";
 import classNames from 'classnames/bind'
 const cx = classNames.bind(Styles)
 
@@ -12,25 +13,19 @@ interface IInputProps{
 }
 
 export default function CurrencyInput(props: IInputProps ) {
+  const debounce = inputDebounce((cur)=>{
+    props.onChange(cur);
+  },200);
   const handleInput = useCallback((e)=>{
-    let pastCur = props.value;
+    // 非受控组件
     let nowCur = e.target.value;
-
-    let curOne = '';
-    let curTwo = '';
-    if(/^\D*$/.test(nowCur)) {
-      curOne = '';
-      curTwo = '';
+    if(/^\d+\.?\d*$/.test(nowCur)) {
+      debounce(nowCur);
     } else {
-      if (/(^[0-9]+\.?[0-9]*$)/.test(nowCur) === false) {
-        // NaN 形如1a, 就会退回非数字的部分
-        nowCur = pastCur;
-      }
-      // 小数，整数
-      curOne = nowCur;
-      // curTwo = (rate * Number.parseFloat(nowCur)).toString();
+      nowCur = nowCur.replace(/[^.\d]/,'').replace(/(\d+)(\.)(\d*)(\.)/,'$1$2$3')
+      e.target.value = nowCur;
     }
-    props.onChange(curOne)
+
   }, [])
 
   const handlePreset = useCallback((type: 'max' | 'half')=>{
@@ -60,20 +55,20 @@ export default function CurrencyInput(props: IInputProps ) {
           </div>
         </div>
         {/* 分割线 */}
-        <div className="bpinner-panel-divider"></div>
+        <div className={cx("bpinner-panel-divider")}></div>
         {/* 两个小按钮 */}
-        <div className="bpinner-button-input">
-          <div className="bpinner-button-wrap">
-            <button type="button" className="bpinner-button" onClick={()=>handlePreset('max')}>Max</button>
-            <button type="button" className="bpinner-button" onClick={()=>handlePreset('half')}>Half</button>
+        <div className={cx("bpinner-button-input")}>
+          <div className={cx("bpinner-button-wrap")}>
+            <button type="button" className={cx("bpinner-button")} onClick={()=>handlePreset('max')}>Max</button>
+            <button type="button" className={cx("bpinner-button")} onClick={()=>handlePreset('half')}>Half</button>
           </div> 
           <div >
-            <input className="bpinner-panel-input" placeholder="" value={props.value} onChange={handleInput}></input>
+            <input className={cx("bpinner-panel-input")} placeholder="" defaultValue={props.value?.toString()} onChange={handleInput}></input>
           </div>
         </div>
       </div>
       {/* 第三层 */}
-      <div className="bp-inner-panel-row">
+      <div className={cx("bp-inner-panel-row")}>
         <span>--</span>
       </div>
     </div>
