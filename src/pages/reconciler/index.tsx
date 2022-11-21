@@ -4,7 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from 'dva';
 import { useEffect, useState } from 'react';
 
 import TokenSelectModal from './components/TokenSelectModal';
-import { ILiquidityState, LIQUIDITY_POOL_LIST, TOKEN_LIST } from './model';
+import { ILiquidityState } from './model';
 
 interface ICurrency {
   symbol?: string;

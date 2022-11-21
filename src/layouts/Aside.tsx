@@ -37,7 +37,7 @@ const items3: MenuProps['items'] = [
   { label: 'Raydium V1', svg: 'raydium' },
   { label: 'Feedback', svg: 'feedback' },
 ].map((item, index) => {
-  const key: string = String(index + 1);
+  const key = String(index + 1);
   return {
     key: `sub${key}`,
     icon: <IconWithoutBack src={item.svg} />,

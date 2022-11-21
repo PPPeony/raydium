@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Styles from './index.less';
 const cx = classNames.bind(Styles);
 

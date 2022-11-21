@@ -1,20 +1,6 @@
 import type { SelectProps } from 'antd';
-import {
-  Button,
-  Cascader,
-  DatePicker,
-  Divider,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Radio,
-  Select,
-  Switch,
-  TreeSelect,
-} from 'antd';
+import { Form, Modal, Select } from 'antd';
 
-import { IOType } from 'child_process';
 import { useCallback } from 'react';
 import { IToken, TOKEN_LIST } from '../model';
 

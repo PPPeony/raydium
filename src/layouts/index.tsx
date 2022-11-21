@@ -2,11 +2,10 @@ import SolanaWalletsProvider from '@/components/SolanaWallets/Provider';
 import { Col, Layout, Row } from 'antd';
 import React from 'react';
 import { Outlet } from 'umi';
-import classNames from 'classnames';
 
 import Aside from './Aside';
-import './index.less';
 import Header from './Header';
+import './index.less';
 
 const App: React.FC = () => (
   <Layout className="outside-layout">
@@ -51,13 +50,13 @@ const App: React.FC = () => (
       </div>
     </header> */}
     <Header />
-    <Layout className="main-layout" >
-      <Row className='main-layout-row' style={{ backgroundColor: '#131a35' }}>
-        <Col className='main-layout-rol'>
+    <Layout className="main-layout">
+      <Row className="main-layout-row" style={{ backgroundColor: '#131a35' }}>
+        <Col className="main-layout-rol">
           <Aside />
         </Col>
         <Col
-          className='main-layout-col'
+          className="main-layout-col"
           flex="auto"
           style={{
             borderTopLeftRadius: '1.25rem',
@@ -73,8 +72,10 @@ const App: React.FC = () => (
   </Layout>
 );
 
-export default () => (
-  <SolanaWalletsProvider>
-    <App />
-  </SolanaWalletsProvider>
-);
+export default function Layout() {
+  return (
+    <SolanaWalletsProvider>
+      <App />
+    </SolanaWalletsProvider>
+  );
+}
