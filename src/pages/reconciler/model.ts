@@ -4,8 +4,9 @@ import LiquidityPoolJSON from '@/constants/liquidityPools.json';
 import TokenJSON from '@/constants/tokens.json';
 import { IGlobalState } from '@/models/global';
 
+import * as liqudityServices from '@/services/raydium/liqudity';
+import * as swapServices from '@/services/raydium/swap';
 import { message } from 'antd';
-import * as services from './service';
 
 /** MARK - namespace */
 export const NAME_SPACE = 'reconciler';
@@ -67,6 +68,13 @@ const combineMint = (mint1: string, mint2: string) => {
   return `${mint2}_${mint1}`;
 };
 
+const getTargetPool = (base: string, quote: string) => {
+  return LIQUIDITY_POOL_LIST.find(
+    (item) =>
+      combineMint(item.baseMint, item.quoteMint) === combineMint(base, quote),
+  );
+};
+
 /** MARK -  reducers & effects */
 
 const modelConfig: IBaseModelType<IReconcilerState> = {
@@ -84,11 +92,7 @@ const modelConfig: IBaseModelType<IReconcilerState> = {
     *getPoolInfo({ opt }, { put, call, select }) {
       if (opt.base && opt.quote) {
         // 1. find target pool
-        const poolJSON = LIQUIDITY_POOL_LIST.find(
-          (item) =>
-            combineMint(item.baseMint, item.quoteMint) ===
-            combineMint(opt.base, opt.quote),
-        );
+        const poolJSON = getTargetPool(opt.base, opt.quote);
         // no pool found
         if (!poolJSON) {
           message.warning('No pool found!');
@@ -103,7 +107,7 @@ const modelConfig: IBaseModelType<IReconcilerState> = {
           return;
         }
         const remotePoolInfo = yield call(
-          services.getRemotePoolInfo,
+          liqudityServices.getPoolInfo,
           connection,
           poolJSON,
         );
@@ -128,16 +132,55 @@ const modelConfig: IBaseModelType<IReconcilerState> = {
       yield put({ type: 'setFilterInfo', payload: opt });
     },
 
-    *addLiquidity(action, { put, call }) {
-      console.log(action);
-      // const res = yield call(services.getPoolInfo);
-      yield put({ type: 'setPoolInfo', payload: {} });
+    *addLiquidity({ opt }, { put, call, select }) {
+      // 1. find target pool
+      const poolJSON = getTargetPool(opt.base, opt.quote);
+      // no pool found
+      if (!poolJSON) {
+        message.warning('No pool found!');
+        return;
+      }
+      // 2. get remote pool info
+      const { connection, wallet } = yield select(
+        (state: { global: IGlobalState }) => {
+          return state.global;
+        },
+      );
+      if (!connection) {
+        message.error('connection is not available');
+        return;
+      }
+      yield call(
+        liqudityServices.addLiquidity,
+        connection,
+        wallet.publicKey,
+        opt.amountInA,
+        opt.amountInB,
+        poolJSON,
+      );
+      message.success('Add Liqudity success');
     },
 
-    *swap(action, { put, call }) {
-      console.log(action);
-      // const res = yield call(services.getPoolInfo);
-      yield put({ type: 'setPoolInfo', payload: {} });
+    *swap({ opt }, { put, call, select }) {
+      // 1. find target pool
+      const poolJSON = getTargetPool(opt.base, opt.quote);
+      // no pool found
+      if (!poolJSON) {
+        message.warning('No pool found!');
+        return;
+      }
+      // 2. get remote pool info
+      const { connection, wallet } = yield select(
+        (state: { global: IGlobalState }) => {
+          return state.global;
+        },
+      );
+      if (!connection) {
+        message.error('connection is not available');
+        return;
+      }
+      yield call(swapServices.swap, connection, wallet.publicKey, opt);
+      message.success('Swap success');
     },
   },
 };
