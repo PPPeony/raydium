@@ -72,7 +72,7 @@ const App: React.FC = () => (
   </Layout>
 );
 
-export default function Layout() {
+export default function Layouts() {
   return (
     <SolanaWalletsProvider>
       <App />

@@ -16,10 +16,8 @@ export interface ILoadingState {
   models: Record<string, boolean>;
   effects: Record<string, boolean>;
 }
-
-export interface IDVAConnectState {
+export interface IDVAConnectState extends Record<string, unknown> {
   loading: ILoadingState;
-  [s: string]: any;
 }
 
 export type ModelState = Record<string, unknown>;

@@ -23,6 +23,7 @@
     "./typings.d.ts",
     "./src/.umi/typings.d.ts",
     "./src/**/*.ts",
+    "./src/**/*.d.ts",
     "./src/**/*.tsx",
     "./*.ts",
     "./*.tsx"

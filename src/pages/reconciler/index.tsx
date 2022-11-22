@@ -1,10 +1,14 @@
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { Button, Spin } from 'antd';
 import { shallowEqual, useDispatch, useSelector } from 'dva';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import TokenSelectModal from './components/TokenSelectModal';
-import { ILiquidityState } from './model';
+import CurrencyDataTable from '@/components/CurrencyDataTable';
+
+import { IDVAConnectState } from '@/models/connectModel';
+import TokenSelectArea from './components/TokenSelectArea';
+import { IFilterInfo, IReconcilerState, NAME_SPACE } from './model';
 
 interface ICurrency {
   symbol?: string;
@@ -56,31 +60,48 @@ export default function Liquidity() {
   const dispatch = useDispatch();
   const wallet = useWallet();
   const walletModal = useWalletModal();
-  const { poolInfo } = useSelector((state: { liquidity: ILiquidityState }) => {
-    return state.liquidity;
-  }, shallowEqual);
+  const { poolInfo, filterInfo, loading } = useSelector(
+    (state: { [NAME_SPACE]: IReconcilerState } & IDVAConnectState) => {
+      return {
+        poolInfo: state[NAME_SPACE].poolInfo,
+        filterInfo: state[NAME_SPACE].filterInfo,
+        loading: state.loading.effects[`${NAME_SPACE}/getPoolInfo`],
+      };
+    },
+    shallowEqual,
+  );
 
   // const { baseCurrencyState, quoteCurrencyState, changeAmount, resetAmount } =
   //   useCurrency(
   //     { symbol: poolInfo?.baseToken.symbol, icon: poolInfo?.baseIcon },
   //     { symbol: poolInfo?.quoteToken.symbol, icon: poolInfo?.quoteIcon },
   //   );
-  useEffect(() => {
+  const handleSelectChange = useCallback((data: IFilterInfo) => {
     dispatch({
-      type: 'reconciler/getPoolInfo',
-      payload: {},
+      type: `${NAME_SPACE}/getPoolInfo`,
+      opt: data,
     });
   }, []);
+
+  // initi
+  useEffect(() => {
+    dispatch({
+      type: `${NAME_SPACE}/getPoolInfo`,
+      opt: filterInfo,
+    });
+  }, []);
+
   return (
-    <div>
-      <TokenSelectModal />
+    <Spin spinning={loading}>
+      <TokenSelectArea onChange={handleSelectChange} data={filterInfo} />
+      <CurrencyDataTable data={poolInfo} />
       {wallet.connected ? (
-        <button>Reconciler</button>
+        <Button type="primary">Reconciler</Button>
       ) : (
-        <button onClick={() => walletModal.setVisible(true)}>
+        <Button onClick={() => walletModal.setVisible(true)}>
           Connect Wallet
-        </button>
+        </Button>
       )}
-    </div>
+    </Spin>
   );
 }

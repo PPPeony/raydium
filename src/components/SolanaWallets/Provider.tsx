@@ -38,7 +38,7 @@ export default function SolanaWalletProviders({
 }: {
   children?: ReactNode;
 }) {
-  const endpoint = useMemo(() => clusterApiUrl('devnet'), []);
+  const endpoint = useMemo(() => clusterApiUrl('mainnet-beta'), []);
   const wallets = useMemo(
     () => [
       new PhantomWalletAdapter(),

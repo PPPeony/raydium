@@ -1,10 +1,11 @@
-import { formatNumber } from '@/utils/formatNumber';
+import { IPoolInfo } from '@/pages/reconciler/model';
+import { formatBigNumber } from '@/utils/formatNumber';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import Styles from './index.less';
 const cx = classNames.bind(Styles);
 
-export default function CurrencyDataTable() {
+export default function CurrencyDataTable(props: { data?: IPoolInfo }) {
   const [displayFlag, setDisplayFlag] = useState(false);
   const [displayValue, setDisplayValue] = useState('none');
   const changeDisplay = () => {
@@ -12,28 +13,38 @@ export default function CurrencyDataTable() {
     setDisplayFlag(!displayFlag);
   };
 
+  const { baseToken, quoteToken, baseReserve, quoteReserve, lpSupply } =
+    props.data || {};
   return (
     <div className={cx('data-table')}>
       <div className={cx('data-table-row')}>
-        <div className={cx('data-table-row-l')}>{`Base`}</div>
-        <div className={cx('data-table-row-r')}>{`RAY`}</div>
+        <div className={cx('data-table-row-l')}>Base</div>
+        <div className={cx('data-table-row-r')}>{baseToken?.symbol}</div>
       </div>
       <div className={cx('data-table-row')}>
-        <div className={cx('data-table-row-l')}>{`pool liquidity (RAY)`} </div>
+        <div className={cx('data-table-row-l')}>
+          pool liquidity ({baseToken?.symbol})
+        </div>
         <div className={cx('data-table-row-r')}>
-          {formatNumber(179994.910241033) + ' RAY'}
+          {formatBigNumber(baseReserve, props.data?.baseDecimals)}
+          &nbsp;
+          {baseToken?.symbol}
         </div>
       </div>
       <div className={cx('data-table-row')}>
-        <div className={cx('data-table-row-l')}>{`pool liquidity (SOL)`}</div>
+        <div className={cx('data-table-row-l')}>
+          pool liquidity ({quoteToken?.symbol})
+        </div>
         <div className={cx('data-table-row-r')}>
-          {formatNumber(6270264.45) + ' SOL'}
+          {formatBigNumber(quoteReserve, props.data?.quoteDecimals)}
+          &nbsp;
+          {quoteToken?.symbol}
         </div>
       </div>
       <div className={cx('data-table-row')}>
         <div className={cx('data-table-row-l')}>{'LP supply'}</div>
         <div className={cx('data-table-row-r')}>
-          {formatNumber(90515.56) + ' LP'}
+          {formatBigNumber(lpSupply, props.data?.lpDecimals) + ' LP'}
         </div>
       </div>
       <div className={cx('more-info-wrap')}>
@@ -48,9 +59,8 @@ export default function CurrencyDataTable() {
               <input
                 type="text"
                 placeholder="12"
-                value={2}
+                defaultValue={2}
                 className={cx('number-input')}
-                onChange={() => ''}
               />
               <div className={cx('percent')}>%</div>
             </div>
