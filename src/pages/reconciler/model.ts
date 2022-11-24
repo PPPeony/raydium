@@ -26,9 +26,11 @@ export type IToken = {
 };
 
 export type IPoolInfo = LiquidityPoolInfo & {
+  baseReserve: number;
+  quoteReserve: number;
   baseToken: IToken;
   quoteToken: IToken;
-  rate: BN;
+  rate: number;
 };
 
 export type IFilterInfo = {
@@ -115,17 +117,22 @@ const modelConfig: IBaseModelType<IReconcilerState> = {
         // 3. construct token info
         const baseToken = TOKEN_LIST.find((item) => item.mint === opt.base);
         const quoteToken = TOKEN_LIST.find((item) => item.mint === opt.quote);
+        const quoteReserve =
+          remotePoolInfo.quoteReserve.toNumber() /
+          10 ** remotePoolInfo.quoteDecimals;
+        const baseReserve =
+          remotePoolInfo.baseReserve.toNumber() /
+          10 ** remotePoolInfo.baseDecimals;
+        const rate = quoteReserve / baseReserve;
         yield put({
           type: 'setPoolInfo',
           payload: {
             ...remotePoolInfo,
+            baseReserve,
+            quoteReserve,
             baseToken,
             quoteToken,
-            rate: remotePoolInfo.quoteReserve
-              .muln(remotePoolInfo.baseDecimals)
-              .div(
-                remotePoolInfo.baseReserve.muln(remotePoolInfo.quoteDecimals),
-              ),
+            rate,
           },
         });
       }

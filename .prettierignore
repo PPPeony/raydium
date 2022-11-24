@@ -1,3 +1,3 @@
 node_modules
-.umi
-.umi-production
+/src/.umi
+/src/.umi-production

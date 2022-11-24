@@ -6,34 +6,34 @@ export default defineConfig({
     {
       path: '/', redirect: '/liquidity'
     },
-    { 
-      path: '/liquidity', 
-      component: '@/pages/liquidity' 
+    {
+      path: '/liquidity',
+      component: '@/pages/liquidity'
     },
-    { 
-      path: '/reconciler', 
-      component: '@/pages/reconciler' 
+    {
+      path: '/reconciler',
+      component: '@/pages/reconciler'
     },
-    { 
-      path: '/swap', 
+    {
+      path: '/swap',
     },
-    { 
-      path: '/concentrated', 
+    {
+      path: '/concentrated',
     },
-    { 
-      path: '/pools', 
+    {
+      path: '/pools',
     },
-    { 
-      path: '/farms', 
+    {
+      path: '/farms',
     },
-    { 
-      path: '/staking', 
+    {
+      path: '/staking',
     },
-    { 
-      path: '/acceleraytor', 
+    {
+      path: '/acceleraytor',
     },
   ],
-  dva:{},
+  dva: {},
   antd: {
     import: false
   },
@@ -42,4 +42,7 @@ export default defineConfig({
   initialState: {},
   request: {},
   layout: false,
+  define: {
+    $$SOLANA_RPC: process.env.SOLANA_RPC
+  }
 });
