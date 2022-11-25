@@ -1,4 +1,5 @@
 import { defineConfig } from '@umijs/max';
+import { clusterApiUrl } from '@solana/web3.js'
 
 export default defineConfig({
   npmClient: 'npm',
@@ -43,6 +44,6 @@ export default defineConfig({
   request: {},
   layout: false,
   define: {
-    $$SOLANA_RPC: process.env.SOLANA_RPC
+    $$SOLANA_RPC: process.env.SOLANA_RPC || clusterApiUrl('mainnet-beta')
   }
 });
