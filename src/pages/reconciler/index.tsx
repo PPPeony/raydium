@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from 'react';
 import CurrencyDataTable from '@/components/CurrencyDataTable';
 
 import { IDVAConnectState } from '@/models/connectModel';
+import ReconcilerArea from './components/ReconcilerArea';
 import TokenSelectArea from './components/TokenSelectArea';
 import { IFilterInfo, IReconcilerState, NAME_SPACE } from './model';
 
@@ -19,7 +20,7 @@ export default function Reconciler() {
       return {
         poolInfo: state[NAME_SPACE].poolInfo,
         filterInfo: state[NAME_SPACE].filterInfo,
-        loading: state.loading.effects[`${NAME_SPACE}/getPoolInfo`],
+        loading: Boolean(state.loading.effects[`${NAME_SPACE}/getPoolInfo`]),
       };
     },
     shallowEqual,
@@ -44,13 +45,12 @@ export default function Reconciler() {
     <Spin spinning={loading}>
       <TokenSelectArea onChange={handleSelectChange} data={filterInfo} />
       <CurrencyDataTable data={poolInfo} />
-      {wallet.connected ? (
-        <Button type="primary">Reconciler</Button>
-      ) : (
-        <Button onClick={() => walletModal.setVisible(true)}>
-          Connect Wallet
-        </Button>
-      )}
+      <ReconcilerArea
+        onSubmit={(queue) => {
+          console.log(queue);
+        }}
+        data={poolInfo}
+      />
     </Spin>
   );
 }

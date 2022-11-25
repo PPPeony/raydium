@@ -21,6 +21,7 @@
   },
   "include": [
     "./typings.d.ts",
+    "./.umirc.ts",
     "./src/.umi/typings.d.ts",
     "./src/**/*.ts",
     "./src/**/*.d.ts",

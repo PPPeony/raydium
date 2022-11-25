@@ -1,49 +1,20 @@
+import { observer, useField } from '@formily/react';
 import type { SelectProps } from 'antd';
-import {
-  Avatar,
-  Button,
-  Cascader,
-  DatePicker,
-  Divider,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Radio,
-  Row,
-  Select,
-  Switch,
-  TreeSelect,
-} from 'antd';
+import { Avatar, Row, Select } from 'antd';
 import React from 'react';
 
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { IFilterInfo, IToken, TOKEN_LIST } from '../model';
 
-const options: SelectProps['options'] = [];
-for (let i = 0; i < 100000; i++) {
-  const value = `${i.toString(36)}${i}`;
-  options.push({
-    label: value,
-    value,
-    disabled: i === 10,
-  });
+interface ITSelectProps extends Omit<SelectProps, 'options'> {
+  dataList?: IToken[];
 }
 
-const TSelect = React.memo(function TSelect(props: {
-  value: string;
-  plactholder: string;
-  onChange: (value: string) => void;
-}) {
+export const TSelect = React.memo(function TSelect(props: ITSelectProps) {
+  const { dataList, ...restProps } = props;
   return (
-    <Select
-      style={{ width: 300 }}
-      placeholder={props.plactholder}
-      value={props.value}
-      showSearch={true}
-      onChange={props.onChange}
-    >
-      {TOKEN_LIST.map((item, index) => (
+    <Select {...restProps}>
+      {(dataList ?? TOKEN_LIST).map((item, index) => (
         <Select.Option key={index} value={item.mint}>
           <Avatar src={item.icon} shape="square" />
           {`${item.name}(${item.symbol})`}
@@ -51,6 +22,10 @@ const TSelect = React.memo(function TSelect(props: {
       ))}
     </Select>
   );
+});
+
+export const TSelectFormily = observer((props) => {
+  return <TSelect showSearch {...props} />;
 });
 
 interface IParams {
@@ -72,12 +47,15 @@ const TokenSelectArea = (props: IParams) => {
   return (
     <Row>
       <TSelect
-        plactholder="Base Select"
+        placeholder="Base Select"
+        style={{ width: 300 }}
         value={props.data?.base || ''}
+        showSearch
         onChange={(value) => handleChange('base', value)}
       />
       <TSelect
-        plactholder="Quote Select"
+        placeholder="Quote Select"
+        style={{ width: 300 }}
         value={props.data?.quote || ''}
         onChange={(value) => handleChange('quote', value)}
       />

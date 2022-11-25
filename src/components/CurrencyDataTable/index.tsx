@@ -1,5 +1,5 @@
 import { IPoolInfo } from '@/pages/reconciler/model';
-import { formatBigNumber } from '@/utils/formatNumber';
+import { formatBigNumber, formatNumber } from '@/utils/formatNumber';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import Styles from './index.less';
@@ -26,7 +26,7 @@ export default function CurrencyDataTable(props: { data?: IPoolInfo }) {
           pool liquidity ({baseToken?.symbol})
         </div>
         <div className={cx('data-table-row-r')}>
-          {formatBigNumber(baseReserve, props.data?.baseDecimals)}
+          {formatNumber(baseReserve, props.data?.baseDecimals)}
           &nbsp;
           {baseToken?.symbol}
         </div>
@@ -36,8 +36,15 @@ export default function CurrencyDataTable(props: { data?: IPoolInfo }) {
           pool liquidity ({quoteToken?.symbol})
         </div>
         <div className={cx('data-table-row-r')}>
-          {formatBigNumber(quoteReserve, props.data?.quoteDecimals)}
+          {formatNumber(quoteReserve, props.data?.quoteDecimals)}
           &nbsp;
+          {quoteToken?.symbol}
+        </div>
+      </div>
+      <div className={cx('data-table-row')}>
+        <div className={cx('data-table-row-l')}>RATE</div>
+        <div className={cx('data-table-row-r')}>
+          1 {baseToken?.symbol} = {props.data?.rate.toFixed(6)}{' '}
           {quoteToken?.symbol}
         </div>
       </div>

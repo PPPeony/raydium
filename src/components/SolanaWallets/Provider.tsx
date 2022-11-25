@@ -29,16 +29,15 @@ import {
   TorusWalletAdapter,
   TrustWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
-import { clusterApiUrl } from '@solana/web3.js';
 
 import '@solana/wallet-adapter-react-ui/styles.css';
-
+declare const $$SOLANA_RPC: string;
 export default function SolanaWalletProviders({
   children,
 }: {
   children?: ReactNode;
 }) {
-  const endpoint = useMemo(() => clusterApiUrl('mainnet-beta'), []);
+  const endpoint = $$SOLANA_RPC;
   const wallets = useMemo(
     () => [
       new PhantomWalletAdapter(),
