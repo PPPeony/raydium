@@ -7,6 +7,7 @@ import ButtonWithBorder from '@/components/ButtonWithBorder';
 import CurrencyDataTable from '@/components/CurrencyDataTable';
 import CurrencyInput from '@/components/CurrencyInput';
 import SwitchTabs from '@/components/SwitchTabs';
+import TokenSelect from '@/components/TokenSelect';
 
 import { ILiquidityState } from './model';
 
@@ -154,6 +155,7 @@ export default function Liquidity() {
           </div>
         </BluePurplePanel>
       </div>
+      <TokenSelect></TokenSelect>
     </div>
   );
 }

@@ -11,15 +11,21 @@
 
 .outside-layout {
   display: flex;
+  height: 100vh;
   flex-direction: column;
   .main-layout {
-    flex: 1;
+    height: 100%;
+    .main-layout-row {
+      height: 100%;
+    }
   }
 }
 
-.site-layout-background-sider {
-  display: none;
+.main-layout-col1,
+.main-layout-col2 {
+  height: 100%;
 }
+
 .site-layout-background {
   background: #131a35;
 }
@@ -86,6 +92,15 @@
 .sider-divider {
   margin: 0.5rem 2rem;
   border-top: 1px solid rgba(57, 208, 216, 0.16);
+}
+
+.outlet-col {
+  border-top-left-radius: 1.25rem;
+  background-color: #0c0927;
+  overflow-y: scroll;
+}
+.outlet-wrap {
+  padding: 3rem;
 }
 
 .frosted-glass,

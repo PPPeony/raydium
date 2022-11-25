@@ -52,18 +52,11 @@ const App: React.FC = () => (
     <Header />
     <Layout className="main-layout">
       <Row className="main-layout-row" style={{ backgroundColor: '#131a35' }}>
-        <Col className="main-layout-rol">
+        <Col className="main-layout-col1">
           <Aside />
         </Col>
-        <Col
-          className="main-layout-col"
-          flex="auto"
-          style={{
-            borderTopLeftRadius: '1.25rem',
-            backgroundColor: '#0c0927',
-          }}
-        >
-          <main style={{ padding: '3rem' }}>
+        <Col className="main-layout-col2 outlet-col" flex="auto">
+          <main className="outlet-wrap">
             <Outlet />
           </main>
         </Col>
