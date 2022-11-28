@@ -149,7 +149,7 @@ const listToMap = <T, S extends string, V = T>(
 };
 
 export async function getAllSwapRouteInfos(
-  poolInfo,
+  poolRouteInfo,
   {
     connection,
     slippageTolerance,
@@ -164,7 +164,7 @@ export async function getAllSwapRouteInfos(
     inputAmount: number;
   },
 ) {
-  const { ammV3, liquidity: apiPoolList } = poolInfo;
+  const { ammV3, liquidity: apiPoolList } = poolRouteInfo;
 
   const chainTime = Date.now() / 1000;
 

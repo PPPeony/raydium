@@ -55,7 +55,7 @@ const App: React.FC = () => (
         <Col className="main-layout-col1">
           <Aside />
         </Col>
-        <Col className="main-layout-col2 outlet-col" flex="auto">
+        <Col className="main-layout-col2 outlet-col" flex="1">
           <main className="outlet-wrap">
             <Outlet />
           </main>
